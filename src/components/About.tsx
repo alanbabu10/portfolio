@@ -253,7 +253,7 @@ export default function About() {
         </div>
 
         {/* Stats Section */}
-        <div
+        {/* <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -305,10 +305,10 @@ export default function About() {
               </p>
             </motion.div>
           ))}
-        </div>
+        </div> */}
 
         {/* Quick Information */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -400,7 +400,7 @@ export default function About() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

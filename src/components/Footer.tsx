@@ -48,7 +48,7 @@ export default function Footer() {
         {/* Social Icons */}
         <div style={{ display: 'flex', gap: '20px' }}>
           <a
-            href="https://github.com"
+            href="https://github.com/alanbabu10"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -74,7 +74,7 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="https://linkedin.com"
+            href="www.linkedin.com/in/alan-babu1"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -127,7 +127,7 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="mailto:contact@alanbabu.com"
+            href="mailto:babuantony135@gmail.com"
             aria-label="Email"
             style={{
               color: '#94a3b8',

@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@studio-freight/react-lenis": "^0.0.47",
     "framer-motion": "^12.40.0",
     "lucide-react": "^0.475.0",
