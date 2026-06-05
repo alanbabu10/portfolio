@@ -75,13 +75,14 @@ export default function Experience() {
             position: 'relative',
             maxWidth: '900px',
             margin: '0 auto',
+            paddingLeft: '45px', // Responsive padding to keep timeline inside container boundaries
           }}
         >
           {/* Timeline Line */}
           <div
             style={{
               position: 'absolute',
-              left: '-30px',
+              left: '15px', // Position line within the container's left padding zone
               top: 0,
               width: '3px',
               height: '100%',
@@ -126,7 +127,7 @@ export default function Experience() {
                 }}
                 style={{
                   position: 'absolute',
-                  left: '-38px',
+                  left: '-39px', // Center aligned with the line at 15px (45px padding - 39px = 6px offset, centered)
                   top: '38px',
                   width: '18px',
                   height: '18px',

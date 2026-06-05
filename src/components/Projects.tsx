@@ -9,16 +9,19 @@ const projects = [
     title: 'E-Commerce Platform',
     desc: 'A full-stack MERN e-commerce solution with Redux state management, Stripe payment integration, and a comprehensive admin dashboard.',
     tech: ['MongoDB', 'Express', 'React', 'Node.js'],
+    image: '/project-ecommerce.png',
   },
   {
     title: 'Real-Time Chat App',
     desc: 'A real-time messaging application using Socket.io, featuring group chats, read receipts, and online status indicators.',
     tech: ['React', 'Node.js', 'Socket.io', 'MongoDB'],
+    image: '/project-chat.png',
   },
   {
     title: 'Task Management System',
     desc: 'A Kanban-style task manager with drag-and-drop functionality, user authentication, and team collaboration features.',
     tech: ['Next.js', 'TypeScript', 'Tailwind', 'Prisma'],
+    image: '/project-task.png',
   }
 ];
 
@@ -45,8 +48,19 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className={styles.projectImage}>
-                {project.title.charAt(0)}
+              <div className={styles.projectImage} style={{ position: 'relative', overflow: 'hidden' }}>
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    transition: 'transform 0.5s ease',
+                  }} 
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.08)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
               </div>
               <div className={styles.projectContent}>
                 <h3 className={styles.projectTitle}>{project.title}</h3>

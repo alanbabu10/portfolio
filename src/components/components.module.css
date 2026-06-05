@@ -2,10 +2,11 @@
 
 .section {
   min-height: 100vh;
-  padding: 6rem 2rem;
+  padding: 8rem 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   position: relative;
   z-index: 1;
 }
@@ -350,4 +351,13 @@
 .textareaField {
   min-height: 150px;
   resize: vertical;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateX(75deg) rotateY(15deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(75deg) rotateY(15deg) rotateZ(360deg);
+  }
 }
