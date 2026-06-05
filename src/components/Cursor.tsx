@@ -57,7 +57,7 @@ export default function Cursor() {
           left: 0,
           width: '8px',
           height: '8px',
-          backgroundColor: 'var(--accent-blue)',
+          backgroundColor: 'var(--primary)',
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 9999,
@@ -70,7 +70,7 @@ export default function Cursor() {
           x: mousePosition.x - 16,
           y: mousePosition.y - 16,
           scale: isHovering ? 1.5 : 1,
-          borderColor: isHovering ? 'var(--accent-purple)' : 'var(--accent-blue)',
+          borderColor: isHovering ? 'var(--secondary)' : 'var(--primary)',
         }}
         transition={{ type: 'tween', ease: 'easeOut', duration: 0.15 }}
         style={{
@@ -79,7 +79,7 @@ export default function Cursor() {
           left: 0,
           width: '32px',
           height: '32px',
-          border: '1px solid var(--accent-blue)',
+          border: '1px solid var(--primary)',
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 9998,

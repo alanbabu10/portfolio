@@ -1,18 +1,22 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useInView } from 'framer-motion';
 import {
   Code2,
   Server,
   Database,
   User,
+  MapPin,
+  Calendar,
+  Sparkles,
 } from 'lucide-react';
 import styles from './components.module.css';
 
 const skillCards = [
   {
     title: 'Frontend Development',
+    
     icon: <Code2 size={32} />,
     description:
       'Building modern, responsive, and high-performance user interfaces with React, Next.js, TypeScript, Tailwind CSS, and Bootstrap.',
@@ -25,7 +29,6 @@ const skillCards = [
       'Bootstrap',
     ],
   },
-
   {
     title: 'Backend Development',
     icon: <Server size={32} />,
@@ -40,7 +43,6 @@ const skillCards = [
       'Python',
     ],
   },
-
   {
     title: 'Database & Deployment',
     icon: <Database size={32} />,
@@ -57,6 +59,34 @@ const skillCards = [
   },
 ];
 
+interface CounterProps {
+  value: number;
+  suffix?: string;
+}
+
+function Counter({ value, suffix = '' }: CounterProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, { stiffness: 50, damping: 20 });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, value, motionValue]);
+
+  useEffect(() => {
+    return springValue.on('change', (latest) => {
+      if (ref.current) {
+        ref.current.textContent = Math.floor(latest).toString() + suffix;
+      }
+    });
+  }, [springValue, suffix]);
+
+  return <span ref={ref} style={{ fontFamily: 'monospace' }}>0{suffix}</span>;
+}
+
 export default function About() {
   return (
     <section
@@ -64,6 +94,8 @@ export default function About() {
       className={styles.section}
       style={{
         padding: '8rem 2rem',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <div className={styles.container}>
@@ -96,8 +128,7 @@ export default function About() {
 
           <h2
             style={{
-              fontSize:
-                'clamp(2.8rem, 6vw, 4.5rem)',
+              fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
               fontWeight: 800,
               color: '#ffffff',
               marginBottom: '1.5rem',
@@ -113,22 +144,17 @@ export default function About() {
               fontSize: '1.1rem',
             }}
           >
-            I'm Alan Babu, a passionate Full Stack Developer
-            focused on creating modern web applications,
-            scalable backend systems, and exceptional user
-            experiences. I enjoy transforming ideas into
-            real-world digital solutions using modern
-            technologies and clean development practices.
+            I'm Alan Babu, a passionate Full Stack Developer focused on creating modern web applications, scalable backend systems, and exceptional user experiences. I enjoy transforming ideas into real-world digital solutions using modern technologies and clean development practices.
           </p>
         </motion.div>
 
-        {/* About Content */}
+        {/* Feature Cards Grid */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns:
-              'repeat(auto-fit, minmax(340px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '2rem',
+            marginBottom: '5rem',
           }}
         >
           {skillCards.map((card, index) => (
@@ -148,12 +174,18 @@ export default function About() {
                 duration: 0.7,
               }}
               whileHover={{
-                y: -8,
+                y: -10,
+                borderColor: 'rgba(56, 189, 248, 0.25)',
+                boxShadow: '0 15px 35px rgba(56, 189, 248, 0.1)',
               }}
               className={styles.glassCard}
               style={{
-                padding: '2rem',
+                padding: '2.5rem 2rem',
                 borderRadius: '24px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(20px)',
+                transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.3s',
               }}
             >
               <div
@@ -164,8 +196,7 @@ export default function About() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  background:
-                    'rgba(56,189,248,0.08)',
+                  background: 'rgba(56,189,248,0.08)',
                   color: '#38bdf8',
                   marginBottom: '1.5rem',
                 }}
@@ -177,6 +208,7 @@ export default function About() {
                 style={{
                   color: '#ffffff',
                   fontSize: '1.5rem',
+                  fontWeight: 700,
                   marginBottom: '1rem',
                 }}
               >
@@ -204,14 +236,10 @@ export default function About() {
                   <span
                     key={skill}
                     style={{
-                      padding:
-                        '0.5rem 0.9rem',
-                      borderRadius:
-                        '999px',
-                      background:
-                        'rgba(255,255,255,0.05)',
-                      border:
-                        '1px solid rgba(255,255,255,0.08)',
+                      padding: '0.5rem 0.9rem',
+                      borderRadius: '999px',
+                      background: 'rgba(255,255,255,0.05)',
+                      border: '1px solid rgba(255,255,255,0.08)',
                       color: '#cbd5e1',
                       fontSize: '0.85rem',
                     }}
@@ -224,21 +252,76 @@ export default function About() {
           ))}
         </div>
 
-        {/* Quick Info */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+        {/* Stats Section */}
+        <div
           style={{
-            marginTop: '5rem',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '2rem',
+            marginBottom: '5rem',
           }}
+        >
+          {[
+            { label: 'Projects Completed', value: 10, suffix: '+', color: '#0ea5e9' },
+            { label: 'Technologies Mastered', value: 16, suffix: '+', color: '#8b5cf6' },
+            { label: 'Client Satisfaction', value: 100, suffix: '%', color: '#ec4899' },
+          ].map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              style={{
+                background: 'rgba(255, 255, 255, 0.01)',
+                border: '1px solid rgba(255, 255, 255, 0.04)',
+                borderRadius: '24px',
+                padding: '2.5rem 1.5rem',
+                textAlign: 'center',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: '3rem',
+                  fontWeight: 800,
+                  color: stat.color,
+                  marginBottom: '0.5rem',
+                  textShadow: `0 0 20px ${stat.color}30`,
+                }}
+              >
+                <Counter value={stat.value} suffix={stat.suffix} />
+              </h3>
+              <p
+                style={{
+                  color: '#94a3b8',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Quick Information */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
         >
           <div
             className={styles.glassCard}
             style={{
-              padding: '2rem',
-              borderRadius: '24px',
+              padding: '2.5rem',
+              borderRadius: '28px',
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              backdropFilter: 'blur(20px)',
             }}
           >
             <div
@@ -246,17 +329,28 @@ export default function About() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1rem',
-                marginBottom: '2rem',
+                marginBottom: '2.5rem',
               }}
             >
-              <User
-                size={28}
-                color="#38bdf8"
-              />
+              <div
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '14px',
+                  background: 'rgba(56, 189, 248, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#38bdf8',
+                }}
+              >
+                <User size={24} />
+              </div>
               <h3
                 style={{
                   color: '#fff',
-                  margin: 0,
+                  fontSize: '1.4rem',
+                  fontWeight: 700,
                 }}
               >
                 Quick Information
@@ -266,81 +360,44 @@ export default function About() {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns:
-                  'repeat(auto-fit,minmax(250px,1fr))',
-                gap: '1.5rem',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                gap: '2rem',
               }}
             >
-              <div>
-                <strong
-                  style={{
-                    color: '#fff',
-                  }}
-                >
-                  Role
-                </strong>
-                <p
-                  style={{
-                    color: '#94a3b8',
-                  }}
-                >
-                  Full Stack Developer
-                </p>
-              </div>
-
-              <div>
-                <strong
-                  style={{
-                    color: '#fff',
-                  }}
-                >
-                  Location
-                </strong>
-                <p
-                  style={{
-                    color: '#94a3b8',
-                  }}
-                >
-                  Kerala, India
-                </p>
-              </div>
-
-              <div>
-                <strong
-                  style={{
-                    color: '#fff',
-                  }}
-                >
-                  Availability
-                </strong>
-                <p
-                  style={{
-                    color: '#94a3b8',
-                  }}
-                >
-                  Open for Freelance &
-                  Full-Time Opportunities
-                </p>
-              </div>
-
-              <div>
-                <strong
-                  style={{
-                    color: '#fff',
-                  }}
-                >
-                  Specialization
-                </strong>
-                <p
-                  style={{
-                    color: '#94a3b8',
-                  }}
-                >
-                  Web Applications,
-                  APIs & Business
-                  Software
-                </p>
-              </div>
+              {[
+                { label: 'Role', value: 'Full Stack Developer', icon: <Sparkles size={16} /> },
+                { label: 'Location', value: 'Kerala, India', icon: <MapPin size={16} /> },
+                { label: 'Availability', value: 'Open for Freelance & Full-Time', icon: <Calendar size={16} /> },
+                { label: 'Specialization', value: 'Web Applications, APIs & Business Software', icon: <Code2 size={16} /> },
+              ].map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                  <span
+                    style={{
+                      color: '#38bdf8',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      letterSpacing: '1px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                    }}
+                  >
+                    {item.icon}
+                    {item.label}
+                  </span>
+                  <p
+                    style={{
+                      color: '#e2e8f0',
+                      fontSize: '1rem',
+                      fontWeight: 500,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {item.value}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </motion.div>
