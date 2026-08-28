@@ -250,55 +250,52 @@ export default function Hero() {
 
         {/* Right Image */}
         <motion.div
-          onMouseMove={
-            handleMouseMove
-          }
-          onMouseLeave={
-            handleMouseLeave
-          }
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
           style={{
             rotateX,
             rotateY,
-            transformStyle:
-              'preserve-3d',
+            transformStyle: 'preserve-3d',
             display: 'flex',
-            justifyContent:
-              'center',
+            justifyContent: 'center',
           }}
         >
           <div
             style={{
-              width: '350px',
-              height: '350px',
-              borderRadius: '32px',
-              background:
-                'rgba(255,255,255,0.04)',
-              backdropFilter:
-                'blur(20px)',
-              border:
-                '1px solid rgba(255,255,255,0.08)',
-              display: 'flex',
-              justifyContent:
-                'center',
-              alignItems:
-                'center',
-              boxShadow:
-                '0 20px 60px rgba(0,0,0,0.35)',
+              position: 'relative',
+              width: '100%',
+              maxWidth: '380px',
+              height: '480px',
+              borderRadius: '28px',
+              background: 'rgba(15, 23, 42, 0.6)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              overflow: 'hidden',
+              boxShadow: '0 0 40px rgba(56, 189, 248, 0.2), 0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+              transition: 'border-color 0.3s ease',
             }}
           >
             <Image
-              src="/alan.jpg"
+              src="/profile-image.png"
               alt="Alan Babu"
-              width={280}
-              height={280}
+              fill
               priority
+              sizes="(max-width: 768px) 100vw, 380px"
               style={{
-                borderRadius: '50%',
                 objectFit: 'cover',
-                border:
-                  '4px solid rgba(56,189,248,0.4)',
-                boxShadow:
-                  '0 0 40px rgba(56,189,248,0.4)',
+                objectPosition: 'center top',
+              }}
+            />
+            {/* Gradient Overlay at Bottom of Card */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: '120px',
+                background: 'linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 100%)',
+                pointerEvents: 'none',
               }}
             />
           </div>
