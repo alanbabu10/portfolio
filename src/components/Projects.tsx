@@ -469,7 +469,7 @@ export default function Projects() {
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {project.cardFeatures.map((feat, i) => (
                       <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#cbd5e1', fontSize: '0.88rem' }}>
-                        <CheckCircle2 size={15} style={{ color: project.accentColor, shrink: 0 }} />
+                        <CheckCircle2 size={15} style={{ color: project.accentColor, flexShrink: 0 }} />
                         <span>{feat}</span>
                       </li>
                     ))}
